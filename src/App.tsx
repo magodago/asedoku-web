@@ -1089,7 +1089,9 @@ function App() {
   };
   const signUp = async () => {
     if (!isSupabaseConfigured || !supabase) {
-      setAuthMsg("Configura Supabase en .env para usar login cloud.");
+      setAuthMsg(
+        "No hay cliente Supabase (faltan VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY). En la raíz del proyecto, crea o edita .env.local con esas dos variables con prefijo VITE_ y reinicia npm run dev."
+      );
       return;
     }
     const { error } = await supabase.auth.signUp({ email: authEmail, password: authPass });
@@ -1107,7 +1109,9 @@ function App() {
       return;
     }
     if (!isSupabaseConfigured || !supabase) {
-      setAuthMsg("Configura Supabase en .env para usar login cloud.");
+      setAuthMsg(
+        "No hay cliente Supabase (faltan VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY). En la raíz del proyecto, crea o edita .env.local con esas dos variables con prefijo VITE_ y reinicia npm run dev."
+      );
       return;
     }
     const { error } = await supabase.auth.signInWithPassword({ email: authEmail, password: authPass });
@@ -1256,8 +1260,12 @@ function App() {
             </div>
           </div>
 
-          {!isSupabaseConfigured && (
-            <p className="cloud-alert mt-3">Configura `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` para activar login cloud.</p>
+          {import.meta.env.DEV && !isSupabaseConfigured && (
+            <p className="cloud-alert mt-3">
+              (solo desarrollo) Para probar login cloud, crea <code className="font-mono text-[11px]">.env.local</code> con{" "}
+              <code className="font-mono text-[11px]">VITE_SUPABASE_URL</code> y{" "}
+              <code className="font-mono text-[11px]">VITE_SUPABASE_ANON_KEY</code>.
+            </p>
           )}
 
           {authUser ? (
