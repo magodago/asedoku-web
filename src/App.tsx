@@ -626,6 +626,7 @@ function App() {
 
   useEffect(() => {
     if (!isSupabaseConfigured || !supabase || !authUser || !cloudLoaded) return;
+    const client = supabase;
     const payload: StoredState = {
       level,
       completedCases,
@@ -642,7 +643,7 @@ function App() {
     };
 
     const t = window.setTimeout(async () => {
-      const { error } = await supabase.from("player_states").upsert(
+      const { error } = await client.from("player_states").upsert(
         {
           user_id: authUser.id,
           state_json: payload,

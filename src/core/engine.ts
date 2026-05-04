@@ -1,5 +1,5 @@
 import { THEME_POOL } from "../content/themes";
-import { DifficultyTier, GameCase, PuzzleCell, ThemeContent } from "../types";
+import { CaseClue, DifficultyTier, GameCase, PuzzleCell, ThemeContent } from "../types";
 import { buildClues } from "./clues";
 import { validateUniqueSolution } from "./validator";
 
@@ -44,7 +44,7 @@ export const generateCase = (level: number, isPremium: boolean): GameCase => {
   const times = SLOTS.slice(0, size);
 
   let solution: PuzzleCell[] = [];
-  let clues = [];
+  let clues: CaseClue[] = [];
   let attempts = 0;
 
   while (attempts < 50) {
